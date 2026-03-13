@@ -1,3 +1,590 @@
-<h1>Hello</h1>
-<h2>How are you?</h2>
-<h3>We are making a web site</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kobi Hari | Angular Consultant</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pastel-lavender: #e8dff5;
+      --pastel-pink: #fce1e4;
+      --pastel-peach: #fcf4dd;
+      --pastel-mint: #ddedea;
+      --pastel-blue: #daeaf6;
+      --pastel-lilac: #c3aed6;
+      --text-dark: #3d3d5c;
+      --text-medium: #5a5a7a;
+      --text-light: #8888a8;
+      --white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--text-dark);
+      text-decoration: none;
+    }
+
+    nav .logo span {
+      color: var(--pastel-lilac);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--text-medium);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    nav ul a:hover {
+      color: var(--pastel-lilac);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-pink) 50%, var(--pastel-peach) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      top: -100px;
+      right: -100px;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      bottom: -80px;
+      left: -80px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .hero-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pastel-lilac), var(--pastel-blue));
+      margin: 0 auto 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: var(--white);
+      font-weight: 700;
+      box-shadow: 0 8px 30px rgba(195, 174, 214, 0.4);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero .tagline {
+      font-size: 1.3rem;
+      color: var(--text-medium);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .hero .intro {
+      font-size: 1.05rem;
+      color: var(--text-medium);
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--pastel-lilac);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(195, 174, 214, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(195, 174, 214, 0.5);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--pastel-lilac);
+      color: var(--text-dark);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--pastel-lilac);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* Section Styles */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 1.05rem;
+      margin-bottom: 3.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* About Section */
+    .about {
+      background: var(--white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .about-visual {
+      background: linear-gradient(135deg, var(--pastel-mint), var(--pastel-blue));
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+
+    .about-visual .code-block {
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+    }
+
+    .about-visual .code-block .keyword { color: #7c4dff; }
+    .about-visual .code-block .string { color: #e06c75; }
+    .about-visual .code-block .comment { color: var(--text-light); }
+
+    .about-text h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p {
+      color: var(--text-medium);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    /* Services Section */
+    .services {
+      background: linear-gradient(180deg, var(--pastel-peach) 0%, var(--white) 100%);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .service-card:nth-child(1) .service-icon { background: var(--pastel-pink); }
+    .service-card:nth-child(2) .service-icon { background: var(--pastel-lavender); }
+    .service-card:nth-child(3) .service-icon { background: var(--pastel-mint); }
+
+    .service-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      color: var(--text-light);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* Skills Section */
+    .skills {
+      background: var(--white);
+    }
+
+    .skills-container {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .skill-tag {
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: transform 0.2s;
+    }
+
+    .skill-tag:hover {
+      transform: scale(1.05);
+    }
+
+    .skill-tag:nth-child(6n+1) { background: var(--pastel-lavender); color: var(--text-dark); }
+    .skill-tag:nth-child(6n+2) { background: var(--pastel-pink); color: var(--text-dark); }
+    .skill-tag:nth-child(6n+3) { background: var(--pastel-peach); color: var(--text-dark); }
+    .skill-tag:nth-child(6n+4) { background: var(--pastel-mint); color: var(--text-dark); }
+    .skill-tag:nth-child(6n+5) { background: var(--pastel-blue); color: var(--text-dark); }
+    .skill-tag:nth-child(6n)   { background: var(--pastel-lilac); color: var(--white); }
+
+    /* Contact Section */
+    .contact {
+      background: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-blue) 100%);
+      text-align: center;
+    }
+
+    .contact-card {
+      background: var(--white);
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+
+    .contact-card p {
+      color: var(--text-medium);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1rem;
+      color: var(--text-medium);
+    }
+
+    .contact-item .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .contact-item:nth-child(1) .icon { background: var(--pastel-pink); }
+    .contact-item:nth-child(2) .icon { background: var(--pastel-mint); }
+    .contact-item:nth-child(3) .icon { background: var(--pastel-lavender); }
+
+    .contact-item a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .contact-item a:hover {
+      color: var(--pastel-lilac);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--white);
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero .tagline { font-size: 1.1rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .services-grid { grid-template-columns: 1fr; max-width: 400px; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.85rem; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+      .hero .btn-group { display: flex; flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">Kobi<span>.</span>dev</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-avatar">KH</div>
+      <h1>Kobi Hari</h1>
+      <p class="tagline">Angular Developer &amp; Consultant</p>
+      <p class="intro">
+        I help teams build modern, scalable, and beautifully crafted web applications
+        using Angular. With years of hands-on consulting experience, I bring clarity
+        to complex projects and deliver real results.
+      </p>
+      <div class="btn-group">
+        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+        <a href="#services" class="btn btn-outline">What I Do</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <h2 class="section-title">About Me</h2>
+    <p class="section-subtitle">Passionate about Angular and clean architecture</p>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="code-block">
+          <span class="comment">// kobi-hari.component.ts</span><br>
+          <span class="keyword">@Component</span>({<br>
+          &nbsp;&nbsp;selector: <span class="string">'kobi-hari'</span>,<br>
+          &nbsp;&nbsp;template: <span class="string">`<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;passion&gt;Angular&lt;/passion&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;role&gt;Consultant&lt;/role&gt;<br>
+          &nbsp;&nbsp;`</span><br>
+          })<br>
+          <span class="keyword">export class</span> KobiHari {<br>
+          &nbsp;&nbsp;mission = <span class="string">'Build amazing apps'</span>;<br>
+          }
+        </div>
+      </div>
+      <div class="about-text">
+        <h3>Hi, I'm Kobi!</h3>
+        <p>
+          I'm a seasoned Angular developer and consultant with a deep love for
+          building exceptional web experiences. I specialize in turning complex
+          requirements into elegant, maintainable solutions.
+        </p>
+        <p>
+          As a consultant, I partner with teams of all sizes to architect scalable
+          Angular applications, improve development workflows, and mentor developers
+          to write cleaner, more efficient code.
+        </p>
+        <p>
+          Whether you need help launching a new product, refactoring a legacy codebase,
+          or leveling up your team's Angular skills, I'm here to help.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <h2 class="section-title">What I Do</h2>
+    <p class="section-subtitle">Tailored consulting services to meet your needs</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">&#128736;</div>
+        <h3>Angular Development</h3>
+        <p>
+          End-to-end Angular application development, from architecture design
+          to production deployment. Clean, tested, and performant code.
+        </p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128218;</div>
+        <h3>Training &amp; Mentoring</h3>
+        <p>
+          Hands-on workshops and one-on-one mentoring to upskill your team
+          in Angular best practices, RxJS, state management, and more.
+        </p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#9889;</div>
+        <h3>Code Review &amp; Consulting</h3>
+        <p>
+          In-depth code reviews, architecture audits, and strategic consulting
+          to optimize your application's performance and maintainability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills" id="skills">
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-subtitle">Technologies I work with every day</p>
+    <div class="skills-container">
+      <span class="skill-tag">Angular</span>
+      <span class="skill-tag">TypeScript</span>
+      <span class="skill-tag">RxJS</span>
+      <span class="skill-tag">NgRx</span>
+      <span class="skill-tag">HTML5</span>
+      <span class="skill-tag">CSS3 / SCSS</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">REST APIs</span>
+      <span class="skill-tag">Git</span>
+      <span class="skill-tag">CI/CD</span>
+      <span class="skill-tag">Unit Testing</span>
+      <span class="skill-tag">Responsive Design</span>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-subtitle">Ready to build something great?</p>
+    <div class="contact-card">
+      <p>
+        I'd love to hear about your project. Whether you have a specific challenge
+        or just want to explore how Angular consulting can help your team, drop me a line.
+      </p>
+      <div class="contact-methods">
+        <div class="contact-item">
+          <div class="icon">&#9993;</div>
+          <a href="mailto:kobi@example.com">kobi@example.com</a>
+        </div>
+        <div class="contact-item">
+          <div class="icon">&#127760;</div>
+          <span>Available for remote &amp; on-site consulting</span>
+        </div>
+        <div class="contact-item">
+          <div class="icon">&#128172;</div>
+          <span>Let's connect on LinkedIn</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Kobi Hari. All rights reserved.
+  </footer>
+
+</body>
+</html>
